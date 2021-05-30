@@ -7,7 +7,7 @@ int main(int argc, char** argv)
 {
     if (argc != 3) {
         fprintf(stderr, "Usage: setcap capabilities filename\n");
-        return EXIT_FAILURE;
+        return argc == 1 ? EXIT_SUCCESS : EXIT_FAILURE;
     }
 
     cap_t my_caps = cap_get_proc();
