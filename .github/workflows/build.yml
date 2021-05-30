@@ -34,4 +34,4 @@ jobs:
         run: cmake --build build --config MinSizeRel
 
       - name: Smoke test
-        run: .build/setcap-static
+        run: ./build/setcap-static
