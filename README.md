@@ -2,6 +2,8 @@
 
 [![Build](https://github.com/sjinks/setcap-static/actions/workflows/build.yml/badge.svg)](https://github.com/sjinks/setcap-static/actions/workflows/build.yml)
 [![Docker CI/CD](https://github.com/sjinks/setcap-static/actions/workflows/docker.yml/badge.svg)](https://github.com/sjinks/setcap-static/actions/workflows/docker.yml)
+[![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/sjinks/setcap-static.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/sjinks/setcap-static/context:cpp)
+![Docker Image Size](https://img.shields.io/docker/image-size/wildwildangel/setcap-static/latest)
 
 `setcap-static` is a statically linked trimmed down version of [setcap(8)](https://linux.die.net/man/8/setcap). It sets the capabilities of the given filename to the capabilities specified.
 
