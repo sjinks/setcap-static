@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <sys/capability.h>
 #include <unistd.h>
+#include "config.h"
 
 int main(int argc, char** argv)
 {
@@ -23,12 +24,14 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
+#ifdef HAVE_CAP_SETNSOWNER
     if (cap_set_nsowner(target_caps, 0)) {
         perror("cap_set_nsowner");
         cap_free(my_caps);
         cap_free(target_caps);
         return EXIT_FAILURE;
     }
+#endif
 
     cap_value_t flag = CAP_SETFCAP;
     if (cap_set_flag(my_caps, CAP_EFFECTIVE, 1, &flag, CAP_SET) != 0) {
