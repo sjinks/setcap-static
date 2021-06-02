@@ -1,5 +1,8 @@
 # setcap-static
 
+[![Build](https://github.com/sjinks/setcap-static/actions/workflows/build.yml/badge.svg)](https://github.com/sjinks/setcap-static/actions/workflows/build.yml)
+[![Docker CI/CD](https://github.com/sjinks/setcap-static/actions/workflows/docker.yml/badge.svg)](https://github.com/sjinks/setcap-static/actions/workflows/docker.yml)
+
 `setcap-static` is a statically linked trimmed down version of [setcap(8)](https://linux.die.net/man/8/setcap). It sets the capabilities of the given filename to the capabilities specified.
 
 ## Why
