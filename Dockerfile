@@ -1,4 +1,4 @@
-FROM alpine:3.14.2 AS build
+FROM alpine:3.14.3 AS build
 RUN apk add --no-cache cmake make musl-dev gcc libcap-static libcap-dev
 WORKDIR /build
 COPY . .
