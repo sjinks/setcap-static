@@ -1,22 +1,18 @@
 name: Docker CI/CD
 
 on:
-  schedule:
-    - cron: "5 0 * * 1"
   push:
     branches:
       - master
     tags:
       - '*.*.*'
-  pull_request:
-    branches:
-      - master
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   docker:
-    permissions:
-      contents: read
     name: Build Docker image
     if: ${{ !contains(github.event.head_commit.message, '[ci skip]') || github.event_name != 'push' }}
     runs-on: ubuntu-latest
@@ -34,8 +30,6 @@ jobs:
           images: wildwildangel/setcap-static
           tags: |
             type=edge
-            type=schedule
-            type=ref,event=pr
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
@@ -51,26 +45,13 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@dc7b9719a96d48369863986a06765841d7ea23f6 # tag=v2.0.0
 
-      - name: Cache Docker layers
-        uses: actions/cache@f4278025ab0f432ce369118909e46deec636f50c # tag=v3.0.6
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
-
       - name: Build and push
         uses: docker/build-push-action@c84f38281176d4c9cdb1626ffafcd6b3911b5d94 # tag=v3.1.1
         with:
           platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
           push: ${{ github.event_name != 'pull_request' }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           context: .
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-      - name: Move cache
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache

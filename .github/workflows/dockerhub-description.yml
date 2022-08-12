@@ -9,10 +9,11 @@ on:
       - .github/workflows/dockerhub-description.yml
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   update-description:
-    permissions:
-      contents: read
     name: Update DockerHub description
     runs-on: ubuntu-latest
 
@@ -20,7 +21,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3.0.2
 
-      - name: Docker Hub Description
+      - name: Set Docker Hub Description
         uses: peter-evans/dockerhub-description@836d7e6aa8f6f32dce26f5a1dd46d3dc24997eae # tag=v3.0.0
         with:
           username: ${{ secrets.DOCKER_LOGIN }}
